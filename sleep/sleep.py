@@ -33,7 +33,7 @@ def generate_subject_ampscript(filename, default_first_column=True):
   target = open(cwd + '/temp/subject-ampscript.html', 'wb+')
   if default_first_column:
     start_col = 2
-    end_col = len(loc_ids)-1
+    end_col = len(loc_ids)
   else:
     start_col = 1
     end_col = len(loc_ids)
@@ -46,7 +46,6 @@ def generate_subject_ampscript(filename, default_first_column=True):
       if_or_elseif = "ELSEIF "
     target.write("%%[" + if_or_elseif + loc_or_pref + " == \"" + loc_ids[i] + "\" THEN]%%\n")
     target.write("\t" + subjects[i].encode('utf8') + "\n")
-    print str(i) + "   " + subjects[i].encode('utf8')
   
   if default_first_column:
     target.write("%%[ELSE]%%\n")
