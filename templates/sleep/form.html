@@ -1,0 +1,10 @@
+{% load url from future %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<h2>SLEEP tool</h2>
+
+<form enctype="multipart/form-data" action="{% url 'sleep.views.upload_file' %}" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="SLEEPIFY" />
+</form>

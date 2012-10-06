@@ -1,0 +1,28 @@
+{% load url from future %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/style.css" />
+    <title>Catalysis Tools - {% block title %}{% endblock %}</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+</head>
+<body>
+    <div id="header">
+        <h1><a href="/">Catalysis Tools</a></h1>
+        <p>Author: Travis Luong</p>
+    </div>
+    <div id="sidebar">
+        {% block sidebar %}
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/sleep">SLEEP</a></li>
+            <li><a href="/sweet">SWEET</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

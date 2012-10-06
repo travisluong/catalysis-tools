@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %}SLEEP Success{% endblock title %}
+{% block content %}
+{% include "sleep/form.html" %}
+<br><br>
+
+<a href="#" id="copy-ampscript">copy ampscript to clipboard</a>
+
+<span style="color:green;" id="copied-msg1"></span>
+
+<div style="clear:both;"></div>
+
+<textarea id="ampscript-output" rows="25" cols="100">{{ output }}</textarea>
+
+<div style="clear:both;"></div>
+
+<br><br>
+
+<a href="#" id="copy-subject-ampscript">copy subjectline to clipboard</a>
+
+<span style="color:green;" id="copied-msg2"></span>
+
+<div style="clear:both;"></div>
+
+<textarea id="subject-ampscript-output" rows="25" cols="100">{{ subject_output }}</textarea>
+
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.zclip.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+      $("a#copy-ampscript, a#copy-subject-ampscript").click(function(event) {
+          event.preventDefault();
+      });
+
+  
+      $('#copy-ampscript').zclip({
+          path:'{{STATIC_URL}}js/ZeroClipboard.swf',
+          copy:function(){return $('#ampscript-output').val();},
+          afterCopy: function(){
+              $('#copied-msg1').html("Ampscript copied to clipboard").fadeIn().delay(1000).fadeOut();
+          }
+      });
+
+      $('#copy-subject-ampscript').zclip({
+          path:'{{STATIC_URL}}js/ZeroClipboard.swf',
+          copy:function(){return $('#subject-ampscript-output').val();},
+          afterCopy: function(){
+              $('#copied-msg2').html("Subjectline copied to clipboard").fadeIn().delay(1000).fadeOut();
+          }
+      });
+
+  });
+</script>
+{% endblock content %}
