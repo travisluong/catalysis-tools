@@ -45,11 +45,11 @@ def generate_subject_ampscript(filename, default_first_column=True):
     else:
       if_or_elseif = "ELSEIF "
     target.write("%%[" + if_or_elseif + loc_or_pref + " == \"" + loc_ids[i] + "\" THEN]%%\n")
-    target.write("\t" + subjects[i].encode('utf8') + "\n")
+    target.write(subjects[i].encode('utf8') + "\n")
   
   if default_first_column:
     target.write("%%[ELSE]%%\n")
-    target.write("\t" + subjects[1].encode('utf8') + "\n")
+    target.write(subjects[1].encode('utf8') + "\n")
     
   target.write("%%[ENDIF]%%\n\n")
   
