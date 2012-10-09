@@ -20,18 +20,27 @@ h1, h2, h3, h4, h5 {
 #header a {
     color: #F12938;
     text-decoration: none;
-    text-shadow: 1px 1px 1px #fff;
-    filter: dropshadow(color=#fff, offx=1, offy=1);
+    text-shadow: 1px 1px 1px #000000;
 }
 #header {
-    background: none repeat scroll 0 0 #CCCCCC;
 }
 #nav ul {
     padding: 0 0 0 20px;
 }
 #nav ul li a {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
     background: none repeat scroll 0 0 #F1293D;
+    border-color: -moz-use-text-color #FFFFFF;
+    border-image: none;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    border-style: none solid;
+    border-width: 0 1px;
     color: #FFFFFF;
+    margin-left: -3px;
     padding: 5px 40px;
     text-decoration: none;
 }
@@ -44,7 +53,7 @@ h1, h2, h3, h4, h5 {
     background: none repeat scroll 0 0 #6F0000;
 }
 #nav {
-    background: none repeat scroll 0 0 #000000;
+    background: none repeat scroll 0 0 #F1293D;
     float: left;
     min-height: 25px;
     padding: 4px 0 0;
