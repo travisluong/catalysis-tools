@@ -9,10 +9,13 @@
   $(document).ready(function(){
     //alert('test');
     var count = 1;
+    var alphabet_count = 0;
     var ampscript_html = "";
+    var is_alphabet_count = true;
     var history = new Array();
     var keyboard_shortcut = true;
-    history.push({'ampscript_html': ampscript_html, 'is_counted': true});
+    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWZYZ";
+    history.push({'ampscript_html': ampscript_html, 'variable_type': true});
 
     $('#variable').click(add_variable);
     $('#anchor').click(add_anchor);
@@ -27,6 +30,14 @@
     
     $('#token-input, #anchor-style, #strong-style, #variable-name').focus(function(){
       keyboard_shortcut = false;
+    });
+    
+    $('#alphabet-count').click(function(){
+      if($('#alphabet-count').prop('checked')){
+        is_alphabet_count = true;
+      } else {
+        is_alphabet_count = false;
+      };
     });
     
     $(document).keydown(function(event){
@@ -56,39 +67,79 @@
     function add_variable(e){
       e.preventDefault();
       variable_name = $('#variable-name').val();
-      ampscript_html = ampscript_html + "%%=v(@"+ variable_name +count+")=%%"
+      
+      if(is_alphabet_count){
+        current_alphabet = alphabet.substr(alphabet_count, 1);
+      } else{
+        current_alphabet = "";
+      }
+      
+      ampscript_html = ampscript_html + "%%=v(@"+ variable_name +count+ current_alphabet+")=%%"
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html': ampscript_html, 'is_counted': true});
-      count++;
+      history.push({'ampscript_html': ampscript_html, 'variable_type': 'variable', 'count':count, 'alphabet_count': alphabet_count});
+      
+      if(is_alphabet_count){
+        alphabet_count++;
+      } else{
+        count++;
+      }
     }
     
     function add_anchor(e){
       e.preventDefault();
+
+      if(is_alphabet_count){
+        current_alphabet = alphabet.substr(alphabet_count, 1);
+      } else{
+        current_alphabet = "";
+      }      
+      
       variable_name = $('#variable-name').val();
       var anchor_style = $('#anchor-style').val();
-      var anchor = '<a href="%%=RedirectTo(@Url'+ variable_name + count + ')=%%"' + ' title="%%=v(@Body' + count + ')=%%" alias="Body: " style="' + anchor_style + '">'+ '%%=v(@'+ variable_name + count +')=%%</a>';
+      var anchor = '<a href="%%=RedirectTo(@Url'+ variable_name + count + current_alphabet + ')=%%"' + ' title="%%=v(@Body' + count + current_alphabet + ')=%%" alias="Body: " style="' + anchor_style + '">'+ '%%=v(@'+ variable_name + count + current_alphabet +')=%%</a>';
       ampscript_html = ampscript_html + anchor;
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html': ampscript_html, 'is_counted': true});
-      count++;
+      history.push({'ampscript_html': ampscript_html, 'variable_type': 'anchor', 'count': count, 'alphabet_count': alphabet_count});
+      
+      if(is_alphabet_count){
+        alphabet_count++;
+      } else{
+        count++;
+      }      
     }
     
     function add_paragraph(e){
       e.preventDefault();
       ampscript_html = ampscript_html + "\n<br><br>\n\n";
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html':ampscript_html, 'is_counted': false});      
+      history.push({'ampscript_html':ampscript_html, 'variable_type': 'paragraph', 'count': count, 'alphabet_count': alphabet_count});
+      if(is_alphabet_count){
+        alphabet_count = 0;
+        count++;
+      }
     }
     
     function add_strong(e){
       e.preventDefault();
+      
+      if(is_alphabet_count){
+        current_alphabet = alphabet.substr(alphabet_count, 1);
+      } else{
+        current_alphabet = "";
+      }      
+      
       variable_name = $('#variable-name').val();      
       var strong_style = $('#strong-style').val();
-      var anchor = '<strong style="' + strong_style +'">'+'%%=v(@'+ variable_name + count +')=%%</strong>';
+      var anchor = '<strong style="' + strong_style +'">'+'%%=v(@'+ variable_name + count + current_alphabet +')=%%</strong>';
       ampscript_html = ampscript_html + anchor;
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html': ampscript_html, 'is_counted': true});      
-      count++;
+      history.push({'ampscript_html': ampscript_html, 'variable_type': 'strong', 'count': count, 'alphabet_count': alphabet_count});      
+
+      if(is_alphabet_count){
+        alphabet_count++;
+      } else{
+        count++;
+      }    
     }
     
     function add_token(e){
@@ -97,7 +148,7 @@
       token = '%%' + token + '%%';
       ampscript_html = ampscript_html + token;
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html':ampscript_html, 'is_counted': false});
+      history.push({'ampscript_html':ampscript_html, 'variable_type': 'token', 'count': count, 'alphabet_count': alphabet_count});
     }
     
     function undo(e){
@@ -106,15 +157,15 @@
       previous_previous_action = history[history.length-2];
       
       previous_action = history[history.length-1];
-      var is_counted = previous_action.is_counted;
+      var variable_type = previous_action.variable_type;
+      alphabet_count = previous_action.alphabet_count;
+      count = previous_action.count;
       var prev_ampscript_html = previous_previous_action.ampscript_html;
       //alert(is_counted);
-      if (is_counted) {
-        count--;
-      }
+
 
       ampscript_html = prev_ampscript_html;
-      //alert(is_counted + ampscript_html);
+      //alert(variable_type + ampscript_html);
       //alert(count + ampscript_html);
       history.pop()
       $('#box').val(prev_ampscript_html);
@@ -126,7 +177,8 @@
 Anchor Style <input id="anchor-style" type="text" size="100"><br />
 Strong Style <input id="strong-style" type="text" size="100"><br />
 Variable Name <input id="variable-name" type="text" size="100"><br />
-Token <input id="token-input" type="text" size="100">
+Token <input id="token-input" type="text" size="100"><br />
+Alphabet Count <input id="alphabet-count" type="checkbox" checked="checked">
 <br /><br />
   <a href="#" id="variable">Variable</a>
   <a href="#" id="anchor">Anchor</a>
