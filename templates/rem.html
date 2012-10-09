@@ -154,6 +154,9 @@
     function undo(e){
       e.preventDefault();
       //alert(history.length);
+      if (count == 1 && alphabet_count == 0) {
+        return;
+      }
       previous_previous_action = history[history.length-2];
       
       previous_action = history[history.length-1];
