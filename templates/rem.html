@@ -1,0 +1,139 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapid Email Maker{% endblock title %}
+{% block content %}
+
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+  <script type="text/javascript">
+  $(document).ready(function(){
+    //alert('test');
+    var count = 1;
+    var ampscript_html = "";
+    var history = new Array();
+    var keyboard_shortcut = true;
+    history.push({'ampscript_html': ampscript_html, 'is_counted': true});
+
+    $('#variable').click(add_variable);
+    $('#anchor').click(add_anchor);
+    $('#paragraph').click(add_paragraph);
+    $('#strong').click(add_strong);
+    $('#token').click(add_token);
+    $('#undo').click(undo)
+    
+    $('#token-input, #anchor-style, #strong-style, #variable-name').blur(function(){
+      keyboard_shortcut = true;
+    });    
+    
+    $('#token-input, #anchor-style, #strong-style, #variable-name').focus(function(){
+      keyboard_shortcut = false;
+    });
+    
+    $(document).keydown(function(event){
+      if (!keyboard_shortcut){
+        return;
+      }
+      if (event.keyCode == 86){
+        $('#variable').click();
+      }
+      if (event.keyCode == 65){
+        $('#anchor').click();
+      }
+      if (event.keyCode == 80){
+        $('#paragraph').click();
+      }
+      if (event.keyCode == 83){
+        $('#strong').click();
+      }      
+      if (event.keyCode == 84){
+        $('#token').click();
+      }
+      if (event.keyCode == 85){
+        $('#undo').click();
+      }
+    });
+
+    function add_variable(e){
+      e.preventDefault();
+      variable_name = $('#variable-name').val();
+      ampscript_html = ampscript_html + "%%=v(@"+ variable_name +count+")=%%"
+      $('#box').val(ampscript_html);
+      history.push({'ampscript_html': ampscript_html, 'is_counted': true});
+      count++;
+    }
+    
+    function add_anchor(e){
+      e.preventDefault();
+      variable_name = $('#variable-name').val();
+      var anchor_style = $('#anchor-style').val();
+      var anchor = '<a href="%%=RedirectTo(@Url'+ variable_name + count + ')=%%"' + ' title="%%=v(@Body' + count + ')=%%" alias="Body: " style="' + anchor_style + '">'+ '%%=v(@'+ variable_name + count +')=%%</a>';
+      ampscript_html = ampscript_html + anchor;
+      $('#box').val(ampscript_html);
+      history.push({'ampscript_html': ampscript_html, 'is_counted': true});
+      count++;
+    }
+    
+    function add_paragraph(e){
+      e.preventDefault();
+      ampscript_html = ampscript_html + "\n<br><br>\n\n";
+      $('#box').val(ampscript_html);
+      history.push({'ampscript_html':ampscript_html, 'is_counted': false});      
+    }
+    
+    function add_strong(e){
+      e.preventDefault();
+      variable_name = $('#variable-name').val();      
+      var strong_style = $('#strong-style').val();
+      var anchor = '<strong style="' + strong_style +'">'+'%%=v(@'+ variable_name + count +')=%%</strong>';
+      ampscript_html = ampscript_html + anchor;
+      $('#box').val(ampscript_html);
+      history.push({'ampscript_html': ampscript_html, 'is_counted': true});      
+      count++;
+    }
+    
+    function add_token(e){
+      e.preventDefault();
+      var token = $('#token-input').val();
+      token = '%%' + token + '%%';
+      ampscript_html = ampscript_html + token;
+      $('#box').val(ampscript_html);
+      history.push({'ampscript_html':ampscript_html, 'is_counted': false});
+    }
+    
+    function undo(e){
+      e.preventDefault();
+      //alert(history.length);
+      previous_previous_action = history[history.length-2];
+      
+      previous_action = history[history.length-1];
+      var is_counted = previous_action.is_counted;
+      var prev_ampscript_html = previous_previous_action.ampscript_html;
+      //alert(is_counted);
+      if (is_counted) {
+        count--;
+      }
+
+      ampscript_html = prev_ampscript_html;
+      //alert(is_counted + ampscript_html);
+      //alert(count + ampscript_html);
+      history.pop()
+      $('#box').val(prev_ampscript_html);
+    }
+    
+  });
+  </script>
+<h1>REM Tool</h1>
+Anchor Style <input id="anchor-style" type="text" size="100"><br />
+Strong Style <input id="strong-style" type="text" size="100"><br />
+Variable Name <input id="variable-name" type="text" size="100"><br />
+Token <input id="token-input" type="text" size="100">
+<br /><br />
+  <a href="#" id="variable">Variable</a>
+  <a href="#" id="anchor">Anchor</a>
+  <a href="#" id="strong">Strong</a>
+  <a href="#" id="paragraph">Paragraph</a>
+  <a href="#" id="token">Token</a>
+  <a href="#" id="undo">Undo</a>
+  <div class="clear"></div>
+	<textarea id="box" cols="100" rows="100"></textarea>
+{% endblock content %}
