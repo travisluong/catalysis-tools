@@ -3,3 +3,4 @@ hello*
 *ampscript.html
 *.xls
 *.pyc
+temp/*
