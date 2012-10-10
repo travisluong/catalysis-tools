@@ -1,27 +1,12 @@
 ﻿# Super Localization Excel Extraction Program
 # Author: Travis Luong
 
-
 import xlrd
 import os
 
 cwd = os.getcwd()
-
 row_offset = 1
-  
-# user_input = int(raw_input("\n[1] has subject line\n[2] no subject line\n> "))
-user_input = 1
-if user_input == 1:
-  has_subject = True
-  row_offset = 2
-elif user_input == 2:
-  has_subject = False
-else:
-  print "Not a valid option."
-  quit()
-  
-
-
+has_subject = True
 
 def generate_subject_ampscript(filename, default_first_column=True):
   wb = xlrd.open_workbook(filename)
@@ -62,6 +47,7 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
   sh = wb.sheet_by_index(0)
   loc_variables = sh.col_values(0)
   loc_ids = sh.row_values(0)
+  num_loc_ids = len(loc_ids)
 
   loc_or_pref = sh.cell(0,0).value
 
@@ -84,17 +70,20 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
     count += 1
     
   target.write("\n")
-    
+  first = True  
   for i in range(col_offset, sh.ncols-1):
 
-    if i == 1:
+    if first and num_loc_ids > 2:
       target.write("IF ")
-    else:
+      first = False
+    elif num_loc_ids > 2:
       target.write("ELSEIF ")
+      first = False
       
-    target.write(loc_or_pref + " == \"")
-    target.write(loc_ids[i+1] + "\"")
-    target.write(" THEN\n")
+    if num_loc_ids > 2:  
+      target.write(loc_or_pref + " == \"")
+      target.write(loc_ids[i+1] + "\"")
+      target.write(" THEN\n")
     
     count = 1
     for j in range(len(loc_variables)-row_offset):
@@ -102,7 +91,9 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
       if replace_quotes:
         val = val.replace('"', "&quot;")
       val = val.encode('utf8')
-      target.write("\tSET")
+      if num_loc_ids > 2:
+        target.write("\t")
+      target.write("SET")
       if auto_variables:
         target.write(" @Body" + str(count) + " = ")
         count += 1
@@ -112,18 +103,22 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
       target.write("\n")     
   
   if default_first_column:
-    target.write("ELSE\n")
+    if num_loc_ids > 2:
+      target.write("ELSE\n")
     for k in range(len(loc_variables)-row_offset):
       val = sh.cell(k+row_offset,1).value
       if replace_quotes:
         val = val.replace('"', "&quot;")
       val = val.encode('utf8')
-      target.write("\tSET")
+      if num_loc_ids > 2:
+        target.write("\t")
+      target.write("SET")
       target.write(" @"+loc_variables[k+row_offset]+" = ")
       target.write("\"" + val + "\"")
       target.write("\n")
-    
-  target.write("ENDIF")
+  
+  if num_loc_ids != 2:
+    target.write("ENDIF")
   target.write("\n\n]%% -->")
   target.close()
     
