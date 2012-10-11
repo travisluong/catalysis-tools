@@ -5,6 +5,22 @@
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+  
+  <style>
+    input[type=text], textarea {
+      border: 3px solid #000;
+    }
+    input[type=text]:focus, textarea:focus {
+      border: 3px solid #F12938;
+    }
+    label {
+      display: inline-block;
+      width: 120px;
+      height: 30px;
+      text-align: right;
+    }    
+  </style>
+  
   <script type="text/javascript">
   $(document).ready(function(){
     //alert('test');
@@ -208,12 +224,12 @@
     
   });
   </script>
-<h1>REM Tool</h1>
-Anchor Style <input id="anchor-style" type="text" size="100"><br />
-Strong Style <input id="strong-style" type="text" size="100"><br />
-Variable Name <input id="variable-name" type="text" size="100"><br />
-Token <input id="token-input" type="text" size="100"><br />
-Alphabet Count <input id="alphabet-count" type="checkbox" checked="checked">
+<h1>Rapid Email Maker</h1>
+<label>Anchor Style</label> <input id="anchor-style" type="text" size="100"><br />
+<label>Strong Style</label> <input id="strong-style" type="text" size="100"><br />
+<label>Variable Name</label> <input id="variable-name" type="text" size="100"><br />
+<label>Token</label> <input id="token-input" type="text" size="100"><br />
+<label>Alphabet Count</label> <input id="alphabet-count" type="checkbox" checked="checked">
 <br /><br />
   <a href="#" id="variable">Variable</a>
   <a href="#" id="anchor">Anchor</a>
