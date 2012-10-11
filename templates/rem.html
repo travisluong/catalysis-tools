@@ -23,7 +23,6 @@
   
   <script type="text/javascript">
   $(document).ready(function(){
-    //alert('test');
     var count = 1;
     var alphabet_count = 0;
     var ampscript_html = "";
@@ -43,6 +42,8 @@
     $('#strong').click(add_strong);
     $('#token').click(add_token);
     $('#undo').click(undo);
+    $('#table').click(add_table);    
+    $('#closetable').click(close_table);    
     $('#compile').click(compile);
     
     $('#token-input, #anchor-style, #strong-style, #variable-name').blur(function(){
@@ -79,7 +80,7 @@
       }      
       if (event.keyCode == 84){
         $('#token').click();
-      }
+      }      
       if (event.keyCode == 85){
         $('#undo').click();
       }
@@ -116,10 +117,6 @@
       }    
     }
     
-    function append_ampscript_html(){
-      ampscript_html = ampscript_html + "%%=v(@"+ variable_name + count + current_alphabet + ")=%%";      
-    }
-    
     function append_ampscript_vars(){
       ampscript_vars = ampscript_vars + "VAR @" + variable_name + count + current_alphabet + "\n";    
     }
@@ -132,7 +129,7 @@
       e.preventDefault();
       variable_name = $('#variable-name').val();
       current_alphabet = get_current_alphabet();
-      append_ampscript_html();
+      ampscript_html = ampscript_html + "%%=v(@"+ variable_name + count + current_alphabet + ")=%%";   
       append_ampscript_vars();
       append_ampscript_sets();
       $('#box').val(ampscript_html);
@@ -152,7 +149,7 @@
       ampscript_urls = ampscript_urls + 'VAR @Url'+ variable_name + count + current_alphabet + "\n";
       ampscript_urls_sets = ampscript_urls_sets + "SET @Url" + variable_name + count + current_alphabet + " = \"\"\n";
       append_ampscript_vars();
-      append_ampscript_vars();
+      append_ampscript_sets();
       $('#box').val(ampscript_html);
       $('#varbox').val(ampscript_vars);
       $('#setbox').val(ampscript_sets);
@@ -196,6 +193,20 @@
       ampscript_html = ampscript_html + token;
       $('#box').val(ampscript_html);
       save_to_history('token')
+    }
+    
+    function add_table(e){
+      e.preventDefault();
+      ampscript_html = ampscript_html + '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="">\n\t<tr>\n\t\t<td align="left" style="">\n';
+      $('#box').val(ampscript_html);
+      save_to_history('table');
+    }
+    
+    function close_table(e){
+      e.preventDefault();
+      ampscript_html = ampscript_html + '\n\t\t</td>\n\t</tr>\n</table>\n';
+      $('#box').val(ampscript_html);
+      save_to_history('closetable');
     }
     
     function undo(e){
@@ -244,12 +255,14 @@
 <label>Token</label> <input id="token-input" type="text" size="100"><br />
 <label>Alphabet Count</label> <input id="alphabet-count" type="checkbox" checked="checked">
 <br /><br />
-  <a href="#" id="variable">Variable</a>
-  <a href="#" id="anchor">Anchor</a>
-  <a href="#" id="strong">Strong</a>
-  <a href="#" id="paragraph">Paragraph</a>
-  <a href="#" id="token">Token</a>
-  <a href="#" id="undo">Undo</a>
+  <a href="#" id="variable"><strong>V</strong>ariable</a>
+  <a href="#" id="anchor"><strong>A</strong>nchor</a>
+  <a href="#" id="strong"><strong>S</strong>trong</a>
+  <a href="#" id="paragraph"><strong>P</strong>aragraph</a>
+  <a href="#" id="token"><strong>T</strong>oken</a>
+  <a href="#" id="undo"><strong>U</strong>ndo</a>
+  <a href="#" id="table">Table</a>
+  <a href="#" id="closetable">Close Table</a>
   <a href="#" id="compile">Compile</a>
   <div class="clear"></div>
 	<textarea id="box" cols="100" rows="100"></textarea>
