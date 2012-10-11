@@ -13,12 +13,13 @@
     var ampscript_html = "";
     var ampscript_vars = "";
     var ampscript_urls = "";
+    var ampscript_urls_sets = "";
     var ampscript_sets = "";
     var is_alphabet_count = true;
     var history = new Array();
     var keyboard_shortcut = true;
     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWZYZ";
-    history.push({'ampscript_html': ampscript_html, 'variable_type': true});
+    history.push({'ampscript_html': ampscript_html, 'variable_type': 'none', 'count':count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls, 'ampscript_urls_sets': ampscript_urls_sets});
 
     $('#variable').click(add_variable);
     $('#anchor').click(add_anchor);
@@ -83,7 +84,7 @@
       $('#box').val(ampscript_html);
       $('#varbox').val(ampscript_vars);
       $('#setbox').val(ampscript_sets);
-      history.push({'ampscript_html': ampscript_html, 'variable_type': 'variable', 'count':count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls});
+      history.push({'ampscript_html': ampscript_html, 'variable_type': 'variable', 'count':count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls, 'ampscript_urls_sets': ampscript_urls_sets});
       
       if(is_alphabet_count){
         alphabet_count++;
@@ -106,13 +107,15 @@
       var anchor = '<a href="%%=RedirectTo(@Url'+ variable_name + count + current_alphabet + ')=%%"' + ' title="%%=v(@Body' + count + current_alphabet + ')=%%" alias="Body: " style="' + anchor_style + '">'+ '%%=v(@'+ variable_name + count + current_alphabet +')=%%</a>';
       ampscript_html = ampscript_html + anchor;
       ampscript_vars = ampscript_vars + 'VAR @'+ variable_name + count + current_alphabet + "\n";
-      ampscript_vars = ampscript_vars + 'VAR @Url'+ variable_name + count + current_alphabet + "\n";
+      ampscript_urls = ampscript_urls + 'VAR @Url'+ variable_name + count + current_alphabet + "\n";
       ampscript_sets = ampscript_sets + "SET @" + variable_name + count + current_alphabet + " = \"\"\n";
-      ampscript_sets = ampscript_sets + "SET @Url" + variable_name + count + current_alphabet + " = \"\"\n";
+      ampscript_urls_sets = ampscript_urls_sets + "SET @Url" + variable_name + count + current_alphabet + " = \"\"\n";
       $('#box').val(ampscript_html);
       $('#varbox').val(ampscript_vars);
       $('#setbox').val(ampscript_sets);
-      history.push({'ampscript_html': ampscript_html, 'variable_type': 'anchor', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls});
+      $('#urlbox').val(ampscript_urls);
+      $('#urlsetbox').val(ampscript_urls_sets);
+      history.push({'ampscript_html': ampscript_html, 'variable_type': 'anchor', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls, 'ampscript_urls_sets': ampscript_urls_sets});
       
       if(is_alphabet_count){
         alphabet_count++;
@@ -125,7 +128,7 @@
       e.preventDefault();
       ampscript_html = ampscript_html + "\n<br><br>\n\n";
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html':ampscript_html, 'variable_type': 'paragraph', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls});
+      history.push({'ampscript_html':ampscript_html, 'variable_type': 'paragraph', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls, 'ampscript_urls_sets': ampscript_urls_sets});
       if(is_alphabet_count){
         alphabet_count = 0;
         count++;
@@ -152,7 +155,7 @@
       $('#box').val(ampscript_html);
       $('#varbox').val(ampscript_vars);
       $('#setbox').val(ampscript_sets);
-      history.push({'ampscript_html': ampscript_html, 'variable_type': 'strong', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls});      
+      history.push({'ampscript_html': ampscript_html, 'variable_type': 'strong', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls, 'ampscript_urls_sets': ampscript_urls_sets});      
 
       if(is_alphabet_count){
         alphabet_count++;
@@ -167,7 +170,7 @@
       token = '%%' + token + '%%';
       ampscript_html = ampscript_html + token;
       $('#box').val(ampscript_html);
-      history.push({'ampscript_html':ampscript_html, 'variable_type': 'token', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls});
+      history.push({'ampscript_html':ampscript_html, 'variable_type': 'token', 'count': count, 'alphabet_count': alphabet_count, 'ampscript_vars': ampscript_vars, 'ampscript_sets': ampscript_sets, 'ampscript_urls': ampscript_urls, 'ampscript_urls_sets': ampscript_urls_sets});
     }
     
     function undo(e){
@@ -184,6 +187,7 @@
       ampscript_vars = previous_previous_action.ampscript_vars;
       ampscript_sets = previous_previous_action.ampscript_sets;
       ampscript_urls = previous_previous_action.ampscript_urls;
+      ampscript_urls_sets = previous_previous_action.ampscript_urls_sets;
       count = previous_action.count;
       var prev_ampscript_html = previous_previous_action.ampscript_html;
       //alert(is_counted);
@@ -192,11 +196,14 @@
       ampscript_html = prev_ampscript_html;
       //alert(variable_type + ampscript_html);
       //alert(count + ampscript_html);
+
       history.pop()
+
       $('#box').val(prev_ampscript_html);
       $('#varbox').val(ampscript_vars);
       $('#setbox').val(ampscript_sets);
       $('#urlbox').val(ampscript_urls);
+      $('#urlsetbox').val(ampscript_urls_sets);
     }
     
   });
@@ -218,4 +225,6 @@ Alphabet Count <input id="alphabet-count" type="checkbox" checked="checked">
 	<textarea id="box" cols="100" rows="100"></textarea>
 	<textarea id="varbox" cols="20" rows="100"></textarea>
 	<textarea id="setbox" cols="20" rows="100"></textarea>
+	<textarea id="urlbox" cols="20" rows="100"></textarea>
+	<textarea id="urlsetbox" cols="20" rows="100"></textarea>
 {% endblock content %}
