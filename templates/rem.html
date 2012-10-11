@@ -42,7 +42,8 @@
     $('#paragraph').click(add_paragraph);
     $('#strong').click(add_strong);
     $('#token').click(add_token);
-    $('#undo').click(undo)
+    $('#undo').click(undo);
+    $('#compile').click(compile);
     
     $('#token-input, #anchor-style, #strong-style, #variable-name').blur(function(){
       keyboard_shortcut = true;
@@ -222,6 +223,19 @@
       $('#urlsetbox').val(ampscript_urls_sets);
     }
     
+    function compile(e){
+      e.preventDefault();
+      var compiled_html = ""
+      compiled_html = compiled_html + "<!-- %%[\n\n";
+      compiled_html = compiled_html + ampscript_vars + "\n";
+      compiled_html = compiled_html + ampscript_sets + "\n";
+      compiled_html = compiled_html + ampscript_urls + "\n";
+      compiled_html = compiled_html + ampscript_urls_sets + "\n";
+      compiled_html = compiled_html + ampscript_html + "\n\n";
+      compiled_html = compiled_html + "]%% -->";
+      $('#box').val(compiled_html);
+    }
+    
   });
   </script>
 <h1>Rapid Email Maker</h1>
@@ -237,6 +251,7 @@
   <a href="#" id="paragraph">Paragraph</a>
   <a href="#" id="token">Token</a>
   <a href="#" id="undo">Undo</a>
+  <a href="#" id="compile">Compile</a>
   <div class="clear"></div>
 	<textarea id="box" cols="100" rows="100"></textarea>
 	<textarea id="varbox" cols="20" rows="100"></textarea>
