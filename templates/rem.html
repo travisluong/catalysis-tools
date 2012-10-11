@@ -228,11 +228,11 @@
       var compiled_html = ""
       compiled_html = compiled_html + "<!-- %%[\n\n";
       compiled_html = compiled_html + ampscript_vars + "\n";
-      compiled_html = compiled_html + ampscript_sets + "\n";
       compiled_html = compiled_html + ampscript_urls + "\n";
+      compiled_html = compiled_html + ampscript_sets + "\n";
       compiled_html = compiled_html + ampscript_urls_sets + "\n";
-      compiled_html = compiled_html + ampscript_html + "\n\n";
-      compiled_html = compiled_html + "]%% -->";
+      compiled_html = compiled_html + "]%% -->\n\n";
+      compiled_html = compiled_html + ampscript_html + "\n";
       $('#box').val(compiled_html);
     }
     
