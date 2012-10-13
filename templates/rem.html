@@ -18,7 +18,18 @@
       width: 120px;
       height: 30px;
       text-align: right;
-    }    
+    }
+		#keyboard_shortcut_indicator {
+			color: #fff;
+			padding: 5px;
+			border-radius:5px;
+		}
+		.ksi_on {
+			background: green;
+		}
+		.ksi_off {
+			background: #F12938;
+		}
   </style>
   
   <script type="text/javascript">
@@ -53,10 +64,12 @@
 			ampscript_sets = $('#setbox').val();
 			ampscript_urls = $('#urlbox').val();
 			ampscript_urls_sets = $('#urlsetbox').val();
+			$('#keyboard_shortcut_indicator').removeClass('ksi_off').addClass('ksi_on').html('Keyboard Shortcuts On');
     });    
     
     $('#token-input, #anchor-style, #strong-style, #variable-name, textarea').focus(function(){
       keyboard_shortcut = false;
+			$('#keyboard_shortcut_indicator').removeClass('ksi_on').addClass('ksi_off').html('Keyboard Shortcuts Off');
     });
     
     $('#alphabet-count').click(function(){
@@ -260,6 +273,7 @@
 <label>Token</label> <input id="token-input" type="text" size="100"><br />
 <label>Alphabet Count</label> <input id="alphabet-count" type="checkbox" checked="checked">
 <br /><br />
+	<span id="keyboard_shortcut_indicator" class="ksi_on">Keyboard Shortcuts On</span>
   <a href="#" id="variable"><strong>V</strong>ariable</a>
   <a href="#" id="anchor"><strong>A</strong>nchor</a>
   <a href="#" id="strong"><strong>S</strong>trong</a>
@@ -269,6 +283,7 @@
   <a href="#" id="table">Table</a>
   <a href="#" id="closetable">Close Table</a>
   <a href="#" id="compile">Compile</a>
+
   <div class="clear"></div>
 	<textarea id="box" cols="100" rows="100"></textarea>
 	<textarea id="varbox" cols="20" rows="100"></textarea>
