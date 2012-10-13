@@ -46,11 +46,16 @@
     $('#closetable').click(close_table);    
     $('#compile').click(compile);
     
-    $('#token-input, #anchor-style, #strong-style, #variable-name').blur(function(){
+    $('#token-input, #anchor-style, #strong-style, #variable-name, textarea').blur(function(){
       keyboard_shortcut = true;
+			ampscript_html = $('#box').val();
+			ampscript_vars = $('#varbox').val();
+			ampscript_sets = $('#setbox').val();
+			ampscript_urls = $('#urlbox').val();
+			ampscript_urls_sets = $('#urlsetbox').val();
     });    
     
-    $('#token-input, #anchor-style, #strong-style, #variable-name').focus(function(){
+    $('#token-input, #anchor-style, #strong-style, #variable-name, textarea').focus(function(){
       keyboard_shortcut = false;
     });
     
