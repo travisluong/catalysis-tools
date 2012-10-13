@@ -211,7 +211,7 @@
     
     function undo(e){
       e.preventDefault();
-      if (count == 1 && alphabet_count == 0) {
+      if (history.length == 1) {
         return;
       }
       var previous_previous_action = history[history.length-2];
