@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'polls',
     'sleep',
     'sweet',
+    'blog',
 )
 
 # A sample logging configuration. The only tangible logging

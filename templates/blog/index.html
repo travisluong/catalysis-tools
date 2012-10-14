@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+{% if latest_post_list %}
+    <div style="width:600px;">
+    {% for post in latest_post_list %}
+        <h2>{{post.title}}</h2>
+        <div style="margin-bottom:20px;">{{post.content|safe}}</div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}
+{% endblock content %}

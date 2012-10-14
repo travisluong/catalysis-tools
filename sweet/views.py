@@ -33,7 +33,7 @@ def upload_file(request):
             os.system(command)
            
             
-            file = open('sweet-temp.docx-ampscript.html', "r+")
+            file = open('sweet-temp.docx-ampscript.html', "w+")
             
             ampscript_html = file.read()
             

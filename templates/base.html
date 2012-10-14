@@ -2,19 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/style.css" />
     <title>Catalysis Tools - {% block title %}{% endblock %}</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 </head>
 <body>
     <div id="header">
-        <h1><a href="/">Catalysis Tools</a></h1>
-        <p>Author: Travis Luong</p>
+        <h1><a href="/">catalysis<span style="color:#F1293D;">tools</span></a></h1>
     </div>
     <div id="nav">
         {% block nav %}
         <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/">HOME</a></li>
             <li><a href="/sleep">SLEEP</a></li>
             <li><a href="/sweet">SWEET</a></li>
             <li><a href="/rem">REM</a></li>
@@ -24,6 +24,12 @@
 
     <div id="content">
         {% block content %}{% endblock %}
+    </div>
+    <div class="clear">
+        
+    </div>
+    <div id="footer">
+        <p>Designed and Coded by <a href="http://www.travisluong.com">Travis Luong</a></p>
     </div>
 </body>
 </html>

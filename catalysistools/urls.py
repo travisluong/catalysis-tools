@@ -5,11 +5,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('django.views.generic.simple',
-    (r'^$', 'direct_to_template', {'template': 'base_home.html'}),
     (r'^rem/$', 'direct_to_template', {'template': 'rem.html'}),
 )
 
 urlpatterns += patterns('',
+    url(r'^$', 'blog.views.index'),
     url(r'^sleep/', include('sleep.urls')),
     url(r'^polls/', include('polls.urls')),
     url(r'^sweet/', include('sweet.urls')),
