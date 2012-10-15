@@ -53,8 +53,8 @@
     $('#strong').click(add_strong);
     $('#token').click(add_token);
     $('#undo').click(undo);
-    $('#table').click(add_table);    
-    $('#closetable').click(close_table);    
+    $('#begin-table').click(begin_table);    
+    $('#end-table').click(end_table);    
     $('#compile').click(compile);
     
     $('#token-input, #anchor-style, #strong-style, #variable-name, textarea').blur(function(){
@@ -101,6 +101,15 @@
       }      
       if (event.keyCode == 85){
         $('#undo').click();
+      }
+      if (event.keyCode == 66){
+        $('#begin-table').click();
+      }
+      if (event.keyCode == 69){
+        $('#end-table').click();
+      }
+      if (event.keyCode == 67){
+        $('#compile').click();
       }
     });
     
@@ -213,18 +222,18 @@
       save_to_history('token')
     }
     
-    function add_table(e){
+    function begin_table(e){
       e.preventDefault();
       ampscript_html = ampscript_html + '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="">\n\t<tr>\n\t\t<td align="left" style="">\n';
       $('#box').val(ampscript_html);
       save_to_history('table');
     }
     
-    function close_table(e){
+    function end_table(e){
       e.preventDefault();
       ampscript_html = ampscript_html + '\n\t\t</td>\n\t</tr>\n</table>\n';
       $('#box').val(ampscript_html);
-      save_to_history('closetable');
+      save_to_history('end-table');
     }
     
     function undo(e){
@@ -280,9 +289,9 @@
   <a href="#" id="paragraph"><strong>P</strong>aragraph</a>
   <a href="#" id="token"><strong>T</strong>oken</a>
   <a href="#" id="undo"><strong>U</strong>ndo</a>
-  <a href="#" id="table">Table</a>
-  <a href="#" id="closetable">Close Table</a>
-  <a href="#" id="compile">Compile</a>
+  <a href="#" id="begin-table"><strong>B</strong>egin Table</a>
+  <a href="#" id="end-table"><strong>E</strong>nd Table</a>
+  <a href="#" id="compile"><strong>C</strong>ompile</a>
 
   <div class="clear"></div>
 	<textarea id="box" cols="100" rows="100"></textarea>
