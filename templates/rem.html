@@ -57,7 +57,7 @@
     $('#end-table').click(end_table);    
     $('#compile').click(compile);
     
-    $('#token-input, #anchor-style, #strong-style, #variable-name, textarea').blur(function(){
+    $('input, textarea').blur(function(){
       keyboard_shortcut = true;
 			ampscript_html = $('#box').val();
 			ampscript_vars = $('#varbox').val();
@@ -67,7 +67,7 @@
 			$('#keyboard_shortcut_indicator').removeClass('ksi_off').addClass('ksi_on').html('Keyboard Shortcuts On');
     });    
     
-    $('#token-input, #anchor-style, #strong-style, #variable-name, textarea').focus(function(){
+    $('input, textarea').focus(function(){
       keyboard_shortcut = false;
 			$('#keyboard_shortcut_indicator').removeClass('ksi_on').addClass('ksi_off').html('Keyboard Shortcuts Off');
     });
@@ -224,7 +224,9 @@
     
     function begin_table(e){
       e.preventDefault();
-      ampscript_html = ampscript_html + '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="">\n\t<tr>\n\t\t<td align="left" style="">\n';
+      table_style = $('#table-style').val();
+      td_style = $('#td-style').val();
+      ampscript_html = ampscript_html + '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="' + table_style + '">\n\t<tr>\n\t\t<td align="left" style="' + td_style + '">\n';
       $('#box').val(ampscript_html);
       save_to_history('table');
     }
@@ -278,6 +280,8 @@
 <h2>Rapid Email Maker</h2>
 <label>Anchor Style</label> <input id="anchor-style" type="text" size="100"><br />
 <label>Strong Style</label> <input id="strong-style" type="text" size="100"><br />
+<label>Table Style</label> <input id="table-style" type="text" size="100"><br />
+<label>TD Style</label> <input id="td-style" type="text" size="100"><br />
 <label>Variable Name</label> <input id="variable-name" type="text" size="100"><br />
 <label>Token</label> <input id="token-input" type="text" size="100"><br />
 <label>Alphabet Count</label> <input id="alphabet-count" type="checkbox" checked="checked">
