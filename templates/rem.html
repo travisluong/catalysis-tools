@@ -273,6 +273,9 @@
       compiled_html = compiled_html + "]%% -->\n\n";
       compiled_html = compiled_html + ampscript_html + "\n";
       $('#box').val(compiled_html);
+      sleep_vars = ampscript_vars + ampscript_urls;
+      sleep_vars = sleep_vars.replace(/VAR @/g, "");
+      $('#sleepbox').val(sleep_vars);
     }
     
   });
@@ -298,9 +301,10 @@
   <a href="#" id="compile"><strong>C</strong>ompile</a>
 
   <div class="clear"></div>
-	<textarea id="box" cols="100" rows="100"></textarea>
-	<textarea id="varbox" cols="20" rows="100"></textarea>
-	<textarea id="setbox" cols="20" rows="100"></textarea>
-	<textarea id="urlbox" cols="20" rows="100"></textarea>
-	<textarea id="urlsetbox" cols="20" rows="100"></textarea>
+	<textarea id="box" cols="90" rows="100"></textarea>
+	<textarea id="varbox" cols="18" rows="100"></textarea>
+	<textarea id="setbox" cols="18" rows="100"></textarea>
+	<textarea id="urlbox" cols="18" rows="100"></textarea>
+	<textarea id="urlsetbox" cols="18" rows="100"></textarea>
+	<textarea id="sleepbox" cols="18" rows="100"></textarea>
 {% endblock content %}
