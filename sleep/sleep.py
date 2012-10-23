@@ -5,8 +5,7 @@ import xlrd
 import os
 
 cwd = os.getcwd()
-row_offset = 1
-has_subject = True
+row_offset = 2
 
 def generate_subject_ampscript(filename, default_first_column=True):
   wb = xlrd.open_workbook(filename)
