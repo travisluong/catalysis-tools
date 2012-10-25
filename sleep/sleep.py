@@ -87,6 +87,15 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
     count = 1
     for j in range(len(loc_variables)-row_offset):
       val = sh.cell(j+row_offset,i+1).value
+
+      # if next cell starts with period, cut trailing right space for current cell
+      try:
+        next_cell_val = sh.cell(j+1+row_offset,i+1).value.encode('utf8')
+        if next_cell_val.startswith("."):
+          val = val.rstrip()
+      except IndexError:
+        continue
+
       if replace_quotes:
         val = val.replace('"', "&quot;")
       val = val.encode('utf8')
