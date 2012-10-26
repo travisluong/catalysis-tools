@@ -88,13 +88,14 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
     for j in range(len(loc_variables)-row_offset):
       val = sh.cell(j+row_offset,i+1).value
 
-      # if next cell starts with period, cut trailing right space for current cell
+      # if next cell starts with period or comma, cut trailing right space for current cell
       try:
         next_cell_val = sh.cell(j+1+row_offset,i+1).value.encode('utf8')
-        if next_cell_val.startswith("."):
+        if next_cell_val.startswith(".") or next_cell_val.startswith(","):
           val = val.rstrip()
+          print val
       except IndexError:
-        continue
+        pass
 
       if replace_quotes:
         val = val.replace('"', "&quot;")
@@ -115,6 +116,15 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
       target.write("ELSE\n")
     for k in range(len(loc_variables)-row_offset):
       val = sh.cell(k+row_offset,1).value
+      print val.encode('utf8')
+      # if next cell starts with period or comma, cut trailing right space for current cell
+      try:
+        next_cell_val = sh.cell(k+1+row_offset,1).value.encode('utf8')
+        if next_cell_val.startswith(".") or next_cell_val.startswith(","):
+          val = val.rstrip()
+      except IndexError:
+        pass
+      
       if replace_quotes:
         val = val.replace('"', "&quot;")
       val = val.encode('utf8')
