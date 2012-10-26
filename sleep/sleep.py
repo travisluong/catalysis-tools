@@ -93,7 +93,6 @@ def generate_ampscript(filename, auto_variables=False, replace_quotes=True, defa
         next_cell_val = sh.cell(j+1+row_offset,i+1).value.encode('utf8')
         if next_cell_val.startswith(".") or next_cell_val.startswith(","):
           val = val.rstrip()
-          print val
       except IndexError:
         pass
 
